@@ -36,20 +36,21 @@ function Fileupload() {
     ///////////
     if(e.target.files[0]) {
       for(let x of e.target.files) {
+        x['save'] = false;
         setFileinfo(prev => [...prev, x])
-        reader.readAsDataURL(x)
+        // reader.readAsDataURL(x)
 
-        reader.onloadend = () => {
-          const previewImgUrl = reader.result
+        // reader.onloadend = () => {
+        //   const previewImgUrl = reader.result
       
-          if(previewImgUrl) {
-            setFileurl([...fileurl, previewImgUrl])
-          }
-        }
+        //   if(previewImgUrl) {
+        //     setFileurl([...fileurl, previewImgUrl])
+        //   }
+        // }
       }
     }
   }
-  console.log(fileurl)
+  console.log(fileinfo)
 
   const uploadFiles = (e) => {
     e.preventDefault();
@@ -57,13 +58,8 @@ function Fileupload() {
   }
 
   const deletefile = (index) => {
-    console.log(fileinfo)
     // setFileinfo(fileinfo.splice(index, 1))
     setFileinfo(fileinfo.filter((val,idx) => idx !== index))
-  }
-
-  const submitFiles = () => {
-
   }
 
   return (
@@ -71,15 +67,16 @@ function Fileupload() {
       <h2>파일 올리기</h2>
       <input type="file" id="fileinput" onChange={handleChangeFile} multiple="multiple" encType="multipart/form-data"
         ref={fileInput} style={{display: 'none'}} />
-      <button onClick={uploadFiles}>파일등록</button>
+      <button onClick={uploadFiles}>파일추가</button>
+
+      <hr />
 
       {
-        fileurl.length > 0 ?
-          <Uploadlist fileurl={fileurl} fileinfo={fileinfo} deletefile={deletefile} />
+        fileinfo.length > 0 ?
+          <Uploadlist fileurl={fileurl} fileinfo={fileinfo} setFileinfo={setFileinfo} />
         :
           null
       }
-      <button style={{display:'block'}} onClick={submitFiles}>저장</button>
     </div>
   )
 }

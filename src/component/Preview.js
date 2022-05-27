@@ -13,7 +13,7 @@ function Preview(props) {
     props.deletefile(index)
   }
 
-  // const imglist = filepreview.map((url, idx) => (
+  /*****  파일 미리보기용  *****/
   const imglist = props.fileinfo.map((file, idx) => (
     <li key={idx}
       style={{width: '100px', height: '130px', background: 'rgba(0,0,0,0.16)', borderRadius: '5px', padding:'10px', listStyle:'none',

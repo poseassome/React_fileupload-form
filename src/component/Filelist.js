@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faImage, faFileLines, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 function Filelist( props ) {
@@ -20,16 +20,17 @@ function Filelist( props ) {
     }
   }
 
+  const checkref = useRef([]);
+
   useEffect(() => {
-    props.setCheckedfile([]);
     setCheckedList([])
-  }, [])
-console.log(checkedList)
+  }, [files])
+
   useEffect(() => {
     props.setCheckedfile(checkedList)
   }, [checkedList])
 
-const checkref = useRef([]);
+// const checkref = useRef([]);
 // if(Allfiles === true) {
 //   checkref.current.forEach((element, index) => {
 //     console.log(element)
@@ -44,7 +45,7 @@ const checkref = useRef([]);
   const Onefile= files.map( (file, idx) => (
     <tr key={idx}>
       <td>
-        <input type="checkbox" value={idx} 
+        <input type="checkbox" value={idx}
           onChange={(e) => onCheckedElement(e.target.checked, e.target.value)}
           ref={el => checkref.current[idx] = el} 
           />

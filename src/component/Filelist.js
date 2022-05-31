@@ -42,6 +42,12 @@ function Filelist( props ) {
 //   });
 // }
 
+  const showPreview = (name) => {
+    console.log(name)
+    props.setPreview(true);
+    props.setPreviewFile(name);
+  }
+
   const Onefile= files.map( (file, idx) => (
     <tr key={idx}>
       <td>
@@ -63,12 +69,16 @@ function Filelist( props ) {
         {`  ${file.name}`}
        </td>
       <td>
-        {
+        {/* {
           file.save ?
-            <FontAwesomeIcon icon={faEye} />
+            <FontAwesomeIcon icon={faEye} style={{cursor: 'pointer'}} />
           :
             <FontAwesomeIcon icon={faEyeSlash} />
-        }
+        } */}
+
+        {/* !!!!!    TEMP     !!!!! */}
+            <FontAwesomeIcon icon={faEye} style={{cursor: 'pointer'}} onClick={() => showPreview(file.name)} />
+
        </td>
       <td>
         {

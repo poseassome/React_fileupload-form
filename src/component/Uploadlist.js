@@ -8,6 +8,8 @@ import JSZip from 'jszip';
 function Uploadlist(props) {
   const fileinfo = props.fileinfo;
   const setFileinfo = props.setFileinfo;
+  const setPreview = props.setPreview;
+  const setPreviewFile = props.setPreviewFile;
 
   const [filesCheck, setFilesCheck] = useState(false);
   const [checkedfile, setCheckedfile] = useState([]);
@@ -29,6 +31,12 @@ function Uploadlist(props) {
 
   useEffect(() => {
     // setCheckedfile([...checkedfile])
+    setFilesCheck(false)
+  }, [fileinfo])
+
+
+  /******************      저장된 파일 불러오기      ******************/
+  useEffect(() => {
 
   }, [fileinfo])
 
@@ -83,6 +91,10 @@ function Uploadlist(props) {
           //   )
           // );
           console.log(fileinfo)
+          // setFileinfo(fileinfo.filter((val,idx) => idx != checkedfile[0]))
+          // setFileinfo(fileinfo.map((val, idx) => 
+          //     idx == checkedfile[0] ? {...val, save: true} : val
+          // ))
           alert("파일을 저장하였습니다.")
         })
         .catch((error) => {
@@ -92,10 +104,11 @@ function Uploadlist(props) {
 
     }
   }
-
+  console.log("info   ", fileinfo)
   /******************      등록 또는 저장한 파일 삭제      ******************/
   const deleteFile = () => {
     if(checkedfile.length === 0) alert("삭제할 파일을 선택해주세요.")
+
     else if(checkedfile.length > 1) {
       // checkedfile.map((el) => {
       //   return setFileinfo(fileinfo.filter((val, idx) => idx != el))
@@ -105,8 +118,6 @@ function Uploadlist(props) {
       checkedfile.map((el) => {
         return setFileinfo(fileinfo.filter((val, idx) => idx != el))
       })
-      console.log("test   ", fileinfo)
-
     }
     setCheckedfile([])
   }
@@ -117,26 +128,34 @@ function Uploadlist(props) {
     
     /***  파일 여러개 선택 압축 다운로드  ***/
     else if(checkedfile.length>1){
-      let zip = new JSZip();
+      // const zip = new JSZip();
 
       for(let i=0; i<checkedfile.length; i++){
         axios.get(downloadFileUrl+fileinfo[checkedfile[i]].name, {
           responseType: 'blob'
         })
+         /****    압축파일 생성(1)    ****/
+        // .then((res) => {
+        //   zip.file(fileinfo[checkedfile[i]].name, res.data, {binary:true})
+        //   console.log("zip   ", zip)
+        //   console.log("res   ", res.data)
+        // })
+        // .catch((error) => {
+        //   console.log(error)
+        // })
         .then((res) => {
-          zip.file(fileinfo[checkedfile[i]].name, res.data, {base64: true})
-          console.log("zip   ", zip)
+          FileSaver.saveAs(res.data, fileinfo[checkedfile[i]].name);
         })
         .catch((error) => {
           console.log(error)
         })
       }
-
-      zip.generateAsync({type: 'blob'})
-        .then(content => {
-          console.log("content   ", content)
-          FileSaver.saveAs(content, new Date())
-        })
+      /****    압축파일 생성(2)    ****/
+      // zip.generateAsync({type:"blob"})
+      //   .then(blob => {
+      //     console.log("content   ", blob)
+      //     FileSaver.saveAs(blob, "Test.zip")
+      //   })
     } else {
       /***  파일 하나 선택 다운로드  ***/
       axios.get(downloadFileUrl+fileinfo[checkedfile[0]].name, {
@@ -150,10 +169,6 @@ function Uploadlist(props) {
         })
     }
   }
-
-console.log("parent  ", checkedfile)
-console.log("info    ", fileinfo)
-
   
 
   return (
@@ -179,7 +194,7 @@ console.log("info    ", fileinfo)
           </tr>
         </thead>
         {/* <tbody> */}
-          <Filelist fileinfo={fileinfo} filesCheck={filesCheck} setCheckedfile={setCheckedfile} />
+          <Filelist fileinfo={fileinfo} filesCheck={filesCheck} setCheckedfile={setCheckedfile} setPreview={setPreview} setPreviewFile={setPreviewFile} />
         {/* </tbody> */}
       </table>
     </div>

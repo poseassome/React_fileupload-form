@@ -1,10 +1,13 @@
 import React, { useRef, useState } from 'react'
+import FilePreview from './FilePreview';
 import Uploadlist from './Uploadlist'
 
 function Fileupload() {
 
   const [fileurl, setFileurl] = useState([]);
   const [fileinfo, setFileinfo] = useState([]);
+  const [preview, setPreview] = useState(false);
+  const [previewFile, setPreviewFile] = useState('');
   
   const fileInput = useRef();
 
@@ -73,7 +76,14 @@ function Fileupload() {
 
       {
         fileinfo.length > 0 ?
-          <Uploadlist fileurl={fileurl} fileinfo={fileinfo} setFileinfo={setFileinfo} />
+          <Uploadlist fileurl={fileurl} fileinfo={fileinfo} setFileinfo={setFileinfo} setPreview={setPreview} setPreviewFile={setPreviewFile} />
+        :
+          null
+      }
+
+      {/* 미리보기 */}
+      { preview ?
+          <FilePreview setPreview={setPreview} previewFile={previewFile} />
         :
           null
       }

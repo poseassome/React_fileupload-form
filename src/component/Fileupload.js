@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import axios from 'axios';
 import FilePreview from './FilePreview';
 import Uploadlist from './Uploadlist'
 
@@ -64,6 +65,14 @@ function Fileupload() {
     // setFileinfo(fileinfo.splice(index, 1))
     setFileinfo(fileinfo.filter((val,idx) => idx !== index))
   }
+
+  // const downloadFileUrl = 'http://localhost:8080/downloadFile/'
+
+  useEffect(() => {
+    // axios.get(downloadFileUrl+fileinfo[checkedfile[i]].name, {
+    //   responseType: 'blob'
+    // })
+  }, [])
 
   return (
     <div>

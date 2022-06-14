@@ -66,18 +66,11 @@ function Fileupload() {
     setFileinfo(fileinfo.filter((val,idx) => idx !== index))
   }
 
-  // const downloadFileUrl = 'http://localhost:8080/downloadFile/'
-
-  useEffect(() => {
-    // axios.get(downloadFileUrl+fileinfo[checkedfile[i]].name, {
-    //   responseType: 'blob'
-    // })
-  }, [])
 
   return (
     <div>
       <h2>파일 올리기</h2>
-      <input type="file" id="fileinput" onChange={handleChangeFile} multiple="multiple" encType="multipart/form-data"
+      <input type="file" id="fileinput" onChange={handleChangeFile} multiple="multiple" encType="multipart/form-data" accept=".pdf, .jpeg, .jpg, .png"
         ref={fileInput} style={{display: 'none'}} />
       <button onClick={uploadFiles}>파일추가</button>
 

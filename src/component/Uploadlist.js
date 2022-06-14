@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import FileSaver from 'file-saver'
+import _ from 'lodash';
 // import Preview from './Preview'
 import Filelist from './Filelist'
 import JSZip from 'jszip';
@@ -14,7 +15,7 @@ function Uploadlist(props) {
   const [filesCheck, setFilesCheck] = useState(false);
   const [checkedfile, setCheckedfile] = useState([]);
 
-  console.log("checked  ", checkedfile)
+  // console.log("checked  ", checkedfile)
 
   const uploadFileUrl = 'http://localhost:8080/uploadFile'
   const uploadFilesUrl = 'http://localhost:8080/uploadMultipleFiles'
@@ -113,7 +114,7 @@ function Uploadlist(props) {
       // checkedfile.map((el) => {
       //   return setFileinfo(fileinfo.filter((val, idx) => idx != el))
       // })
-      // console.log("test   ", fileinfo)
+
     } else {
       checkedfile.map((el) => {
         return setFileinfo(fileinfo.filter((val, idx) => idx != el))
@@ -186,7 +187,7 @@ function Uploadlist(props) {
       <table style={{width: '800px', margin:'0 auto'}}>
         <thead>
           <tr>
-            <th><input type="checkbox" onChange={(e) => (selectAllFiles(e.target.checked))} /></th>
+            <th><input type="checkbox" onChange={(e) => (selectAllFiles(e.target.checked))} checked={filesCheck ? true : false} /></th>
             <th>No</th>
             <th>FileName</th>
             <th>Preview</th>
@@ -194,7 +195,7 @@ function Uploadlist(props) {
           </tr>
         </thead>
         {/* <tbody> */}
-          <Filelist fileinfo={fileinfo} filesCheck={filesCheck} setCheckedfile={setCheckedfile} setPreview={setPreview} setPreviewFile={setPreviewFile} />
+          <Filelist fileinfo={fileinfo} filesCheck={filesCheck} setFilesCheck={setFilesCheck} setCheckedfile={setCheckedfile} setPreview={setPreview} setPreviewFile={setPreviewFile} />
         {/* </tbody> */}
       </table>
     </div>

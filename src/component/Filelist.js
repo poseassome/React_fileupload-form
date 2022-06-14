@@ -6,16 +6,19 @@ import { faImage, faFileLines, faEyeSlash } from '@fortawesome/free-regular-svg-
 function Filelist( props ) {
 
   const files = props.fileinfo;    // files 배열
-  const Allfiles = props.filesCheck;
+  const Allfiles = props.filesCheck;    // 전체선택
 
   const [checkedList, setCheckedList]= useState([]);    // 파일 check 여부
 
+
+console.log(checkedList)
   /***  파일 하나 선택 check  ***/
   const onCheckedElement = (checked, item) => {
     if(checked) {
       setCheckedList([...checkedList, item]);
     }
     else if(!checked) {
+      props.setFilesCheck(false)
       setCheckedList(checkedList.filter(el => el !== item));
     }
   }
@@ -27,7 +30,22 @@ function Filelist( props ) {
   }, [files])
 
   useEffect(() => {
+    if(Allfiles===true){
+      let arr = []
+      checkref.current.forEach((val, idx) => {
+        val.checked = true;
+        arr.push(idx)
+      })
+      setCheckedList(arr)
+    }
+    else if(Allfiles===false && checkedList.length === files.length) setCheckedList([]);
+  }, [Allfiles])
+
+console.log(checkedList)
+
+  useEffect(() => {
     props.setCheckedfile(checkedList)
+    if(checkedList.length === files.length) props.setFilesCheck(true)
   }, [checkedList])
 
 // const checkref = useRef([]);
@@ -52,7 +70,8 @@ function Filelist( props ) {
     <tr key={idx}>
       <td>
         <input type="checkbox" value={idx}
-          onChange={(e) => onCheckedElement(e.target.checked, e.target.value)}
+          onChange={(e) => onCheckedElement(e.target.checked, Number(e.target.value))}
+          checked={checkedList.includes(idx) ? true : false}
           ref={el => checkref.current[idx] = el} 
           />
        </td>

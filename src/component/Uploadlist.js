@@ -111,10 +111,15 @@ function Uploadlist(props) {
     if(checkedfile.length === 0) alert("삭제할 파일을 선택해주세요.")
 
     else if(checkedfile.length > 1) {
-      // checkedfile.map((el) => {
-      //   return setFileinfo(fileinfo.filter((val, idx) => idx != el))
-      // })
+      let arr = [];
 
+      checkedfile.map((el) => {
+        return fileinfo.filter((val, idx) => {
+          if(el !== idx) arr.push(val);
+        })
+      })
+      console.log("arrrr   ", arr)
+      setFileinfo(prev => prev = arr);
     } else {
       checkedfile.map((el) => {
         return setFileinfo(fileinfo.filter((val, idx) => idx != el))
@@ -122,6 +127,7 @@ function Uploadlist(props) {
     }
     setCheckedfile([])
   }
+  console.log("ck1   ", checkedfile)
 
   /******************      저장된 파일 다운로드      ******************/
   const downloadFile = () => {

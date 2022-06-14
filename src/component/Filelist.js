@@ -11,7 +11,7 @@ function Filelist( props ) {
   const [checkedList, setCheckedList]= useState([]);    // 파일 check 여부
 
 
-console.log(checkedList)
+
   /***  파일 하나 선택 check  ***/
   const onCheckedElement = (checked, item) => {
     if(checked) {
@@ -24,41 +24,34 @@ console.log(checkedList)
   }
 
   const checkref = useRef([]);
-
+console.log("ref   ", checkref)
   useEffect(() => {
     setCheckedList([])
   }, [files])
 
+  console.log("ck2   ", checkedList)
+
+  /***  파일 전체 선택 check  ***/
+  // 전체 checkbox
   useEffect(() => {
     if(Allfiles===true){
       let arr = []
       checkref.current.forEach((val, idx) => {
-        val.checked = true;
-        arr.push(idx)
+        if(val !== null){
+          val.checked = true;
+          arr.push(idx)
+        }
       })
       setCheckedList(arr)
     }
     else if(Allfiles===false && checkedList.length === files.length) setCheckedList([]);
   }, [Allfiles])
-
-console.log(checkedList)
-
+  // 개별로 다 check했을 때 전체 check
   useEffect(() => {
     props.setCheckedfile(checkedList)
     if(checkedList.length === files.length) props.setFilesCheck(true)
   }, [checkedList])
 
-// const checkref = useRef([]);
-// if(Allfiles === true) {
-//   checkref.current.forEach((element, index) => {
-//     console.log(element)
-//     element.checked = true;
-//   });
-// } else {
-//   checkref.current.forEach(element => {
-//     element.checked = false
-//   });
-// }
 
   const showPreview = (name) => {
     console.log(name)

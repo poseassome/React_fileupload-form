@@ -14,8 +14,6 @@ function Fileupload() {
 
   const handleChangeFile = async (e) => {
     e.preventDefault();
-
-console.log("**********************************Text")
     const reader = new FileReader();
     /*
     if(e.target.files[0]) {
@@ -54,6 +52,7 @@ console.log("**********************************Text")
         // }
       }
     }
+    e.target.value = ''
   }
   console.log("fileinfo   ", fileinfo)
 
@@ -84,7 +83,7 @@ console.log("**********************************Text")
       <hr />
 
       {
-        fileinfo.length > 0 ?
+        fileinfo.length > 0 && fileinfo ?
           <Uploadlist changeFile={changeFile} fileurl={fileurl} fileinfo={fileinfo} setFileinfo={setFileinfo} setPreview={setPreview} setPreviewFile={setPreviewFile} />
         :
           null

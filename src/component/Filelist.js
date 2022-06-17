@@ -12,7 +12,6 @@ function Filelist( props ) {
   const [checkedList, setCheckedList]= useState([]);    // 파일 check 여부
 
 
-
   /***  파일 하나 선택 check  ***/
   const onCheckedElement = (checked, item) => {
     if(checked) {
@@ -37,7 +36,7 @@ console.log("ref   ", checkref)
         val.checked = false;
         }
       })
-      // setCheckedList([])
+
     }
   }, [props.checkedfile])
 
@@ -57,6 +56,9 @@ console.log("ref   ", checkref)
       setCheckedList(arr)
     }
     else if(Allfiles===false && checkedList.length === files.length) setCheckedList([]);
+    // else if(Allfiles===false) {
+    //   setCheckedList([]);
+    // }
   }, [Allfiles])
   // 개별로 다 check했을 때 전체 check
   useEffect(() => {

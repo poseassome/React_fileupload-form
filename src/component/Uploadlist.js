@@ -140,6 +140,7 @@ function Uploadlist(props) {
         props.changeFile(prevFile)
         setCheckedfile([])
         setFilesCheck(false)
+        
 
     } else {
       /**  파일 하나 삭제  **/
@@ -228,11 +229,9 @@ function Uploadlist(props) {
           </tr>
         </thead>
         {/* <tbody> */}
-          { fileinfo.length > 0 ?
-            <Filelist checkedfile={checkedfile} fileinfo={fileinfo} filesCheck={filesCheck} setFilesCheck={setFilesCheck} setCheckedfile={setCheckedfile} setPreview={setPreview} setPreviewFile={setPreviewFile} />
-            :
-            null
-          }
+
+          <Filelist checkedfile={checkedfile} fileinfo={fileinfo} filesCheck={filesCheck} setFilesCheck={setFilesCheck} setCheckedfile={setCheckedfile} setPreview={setPreview} setPreviewFile={setPreviewFile} />
+
         {/* </tbody> */}
       </table>
     </div>

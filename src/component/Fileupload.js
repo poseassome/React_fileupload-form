@@ -12,9 +12,10 @@ function Fileupload() {
   
   const fileInput = useRef();
 
-  const handleChangeFile = (e) => {
+  const handleChangeFile = async (e) => {
     e.preventDefault();
 
+console.log("**********************************Text")
     const reader = new FileReader();
     /*
     if(e.target.files[0]) {
@@ -54,7 +55,7 @@ function Fileupload() {
       }
     }
   }
-  console.log(fileinfo)
+  console.log("fileinfo   ", fileinfo)
 
   const uploadFiles = (e) => {
     e.preventDefault();
@@ -65,6 +66,12 @@ function Fileupload() {
     // setFileinfo(fileinfo.splice(index, 1))
     setFileinfo(fileinfo.filter((val,idx) => idx !== index))
   }
+
+  const changeFile = (file) => {
+    setFileinfo(file)
+  }
+
+
 
 
   return (
@@ -78,7 +85,7 @@ function Fileupload() {
 
       {
         fileinfo.length > 0 ?
-          <Uploadlist fileurl={fileurl} fileinfo={fileinfo} setFileinfo={setFileinfo} setPreview={setPreview} setPreviewFile={setPreviewFile} />
+          <Uploadlist changeFile={changeFile} fileurl={fileurl} fileinfo={fileinfo} setFileinfo={setFileinfo} setPreview={setPreview} setPreviewFile={setPreviewFile} />
         :
           null
       }

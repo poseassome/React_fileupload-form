@@ -152,28 +152,26 @@ function Uploadlist(props) {
 
 
   /******************      저장된 파일 다운로드      ******************/
-  const downloadFile = async () => {
+  const downloadFile = () => {
     if(checkedfile.length === 0) alert("다운로드할 파일을 선택해주세요.")
     
     /***  파일 여러개 선택 압축 다운로드  ***/
     else if(checkedfile.length>1){
       const zip = new JSZip();
-      let ziparray = [];
+
       for(let i=0; i<checkedfile.length; i++){
         axios.get(downloadFileUrl+fileinfo[checkedfile[i]].name, {
           responseType: 'blob'
         })
          /****    압축파일 생성(1)    ****/
         .then((res) => {
-          console.log(res)
+          zip.file(fileinfo[checkedfile[i]].name, res.data, {binary:true})
+          console.log("zip   ", zip)
+          console.log("res   ", res)
         })
         .catch((error) => {
           console.log(error)
         })
-
-        let fileRes = await fetch(downloadFileUrl+fileinfo[checkedfile[i]].name)
-        let fileBlob = await fileRes.blob();
-        zip.file(fileinfo[checkedfile[i]].name, fileBlob)
 
         // .then((res) => {
         //   FileSaver.saveAs(res.data, fileinfo[checkedfile[i]].name);
@@ -185,7 +183,8 @@ function Uploadlist(props) {
       /****    압축파일 생성(2)    ****/
       zip.generateAsync({type:"blob"})
         .then(blob => {
-          FileSaver.saveAs(blob, "다중파일압축.zip")
+          console.log("content   ", blob)
+          FileSaver.saveAs(blob, "Test.zip")
         })
         .catch(err => {
           console.log(err)

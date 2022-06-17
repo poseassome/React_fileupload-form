@@ -8,6 +8,7 @@ function Filelist( props ) {
   const files = props.fileinfo;    // files 배열
   const Allfiles = props.filesCheck;    // 전체선택
 
+
   const [checkedList, setCheckedList]= useState([]);    // 파일 check 여부
 
 
@@ -28,6 +29,17 @@ console.log("ref   ", checkref)
   useEffect(() => {
     setCheckedList([])
   }, [files])
+
+  useEffect(() => {
+    if(props.checkedfile.length === 0){
+      checkref.current.forEach((val, idx) => {
+        if(val !== null){
+        val.checked = false;
+        }
+      })
+      // setCheckedList([])
+    }
+  }, [props.checkedfile])
 
   console.log("ck2   ", checkedList)
 
@@ -54,7 +66,6 @@ console.log("ref   ", checkref)
 
 
   const showPreview = (name) => {
-    console.log(name)
     props.setPreview(true);
     props.setPreviewFile(name);
   }
@@ -92,14 +103,14 @@ console.log("ref   ", checkref)
             <FontAwesomeIcon icon={faEye} style={{cursor: 'pointer'}} onClick={() => showPreview(file.name)} />
 
        </td>
-      <td>
+      {/* <td>
         {
           file.save ?
             '저장 완료'
           :
             '저장 안 됨'
         }
-       </td>
+       </td> */}
     </tr>
   ))
 
